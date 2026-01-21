@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}Register{% endblock %}
+{% block content %}
+<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
+<div class="alertcontainer">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      <div class="alert alert-{{ 'danger' if category == 'error' else 'success' }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    {% endfor %}
+  {% endif %}
+  {% endwith %}
+</div>
+
+<!-- wrapper contains all of the register components 
+     and allows for positional changes -->
+<div class="wrapper">
+    <form method="post">
+        <h1>Register</h1>
+
+        <div class="inputBox">
+            <input type="text" name="firstname" placeholder="First Name" required>
+            <i class="bx bx-user"></i>
+        </div>
+
+        <div class="inputBox">
+            <input type="text" name="lastname" placeholder="Last Name" required>
+            <i class="bx bx-user"></i>
+        </div>
+
+        <div class="inputBox">
+            <input type="email" name="email" placeholder="Email" required>
+            <i class="bx bx-user"></i>
+        </div>
+
+        <div class="inputBox">
+            <input type="password" name="password1" placeholder="Password" required>
+            <i class="bx bx-lock"></i>
+        </div>
+
+        <div class="inputBox">
+            <input type="password" name="password2" placeholder="Confirm Password" required>
+            <i class="bx bx-lock"></i>
+        </div>
+
+        <div class="inputBox">
+            <select name="role_select" required>
+                <option value="">-- Select Role --</option>
+                <option value="user">User</option>
+                <option value="admin">Admin</option>
+            </select>
+        </div>
+
+        <button type="submit" class="button">Register</button>
+
+        <div class="register">
+            <p>
+                Already have an account?
+                <a href="/login">Login here</a>
+            </p>
+        </div>
+    </form>
+</div>
+{% endblock %}
