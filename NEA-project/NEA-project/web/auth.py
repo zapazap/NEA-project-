@@ -2,32 +2,45 @@ from flask import Blueprint, request, flash, render_template, url_for, redirect
 from .models import User
 from werkzeug.security import generate_password_hash,check_password_hash
 auth = Blueprint("auth", __name__)
+# imports the db from _init_.py
+from . import db 
+from flask_login import login_user,login_required,logout_user,current_user
 
 @auth.route("/login",methods=["GET","POST"]) 
 def login():
     if request.method == "POST":
-        username = request.form.get("username")
+        email = request.form.get("email")
         password = request.form.get("password")
+        user = User.query.filter_by(email=email).first()
+        if user:
+            if check_password_hash(user.password, password):
+                flash("logged in successfully", category="success")
+                login_user(user,remember=True)
+                return redirect(url_for("views.home"))
+            else:
+                flash("incorrect password", category="error")
+        else:
+            flash("user does not exist", category="error")
         
-    return render_template(url_for("views.login"))
+        return redirect(url_for("views.login"))
 
 
-@auth.route("/register",methods=["POST"]) 
+@auth.route("/register",methods=["GET" ,"POST"]) 
 def register():
     if request.method == "POST":
-        first_name = request.form.get("firstname")
-        last_name = request.form.get("lastname")
         email = request.form.get("email")
+        first_name = request.form.get("firstname")
         password1 = request.form.get("password1")
         password2 = request.form.get("password2")
-        if len(email) < 4:
+        user = User.query.filter_by(email=email).first()
+
+        if user:
+            flash("user already exists", category="error")
+        elif len(email) < 4:
             flash("Email must be greater than four characters", category="error")
 
         elif len(first_name) < 2:
             flash("First name too short", category="error")
-        
-        elif len(last_name) < 2:
-            flash("last name too short", category="error")
 
         elif len(password1) < 7:
             flash("Password too short", category="error")
@@ -36,14 +49,21 @@ def register():
             flash("Passwords do not match", category="error")
         else:
             # add user to database here
-            new_user = User(email = email, first_name = first_name, last_name = last_name, password=generate_password_hash(password1) )
+            new_user = User(email = email, first_name = first_name, password=generate_password_hash(password1) )
             db.session.add(new_user)
             db.session.commit()
             flash("Account created", category="success")
-            return redirect(url_for("views.home"))
+            login_user(user,remember=True)
+            return redirect(url_for("views.register"))
         return render_template("register.html")
 
-@auth.route("/resetPassword",methods=["POST"]) 
+@auth.route("/resetPassword",methods=["GET","POST"]) 
 def resetPassword():
-    return render_template(url_for("views.resetPassword"))
+    return redirect(url_for("views.resetPassword"))
+
+@auth.route("/logout") 
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for("views.login"))
     

@@ -13,7 +13,7 @@ body{
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: rgb(156, 155, 155);
+    background-color: #343a40;
 }
 
 
@@ -27,8 +27,18 @@ input {
     background-color: #343a40;
     color: white;
     border-radius: 10px;
+    justify-self: center;
+
+}
+
+.container{
+    width: 480px;
+    background-color: #343a40;
+    color: white;
+    border-radius: 10px;
     padding: 30px;
     justify-self: center;
+    box-shadow: 0 0 10px black;
 }
 
 h1{
@@ -119,10 +129,7 @@ input:not([type="checkbox"]),select{
     text-decoration: underline;
 }
 
-.alertcontainer{
-    text-align: center;
-    position: relative;
-    width: 100vw;
-    height: 10vh;
-}
+
+
+
 
