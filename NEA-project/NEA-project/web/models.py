@@ -13,7 +13,8 @@ class User(db.Model, UserMixin):
 
 class Item(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    item_name = db.Column(db.String(30))
-    item__count = db.Column(db.Integer)
-    date = db.Column(db.DateTime(timezone = True), default = func.now())
+    name = db.Column(db.String(30))
+    stock = db.Column(db.Integer, default = 0)
+    # price = db.Column(db.Integer)
+    # date = db.Column(db.DateTime(timezone = True), default = func.now())
     user_id = db.Column(db.Integer,db.ForeignKey("user.id"))

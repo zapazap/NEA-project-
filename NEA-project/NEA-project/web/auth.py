@@ -1,5 +1,5 @@
 from flask import Blueprint, request, flash, render_template, url_for, redirect
-from .models import User
+from .models import User,Item
 from werkzeug.security import generate_password_hash,check_password_hash
 auth = Blueprint("auth", __name__)
 # imports the db from _init_.py
@@ -66,4 +66,43 @@ def resetPassword():
 def logout():
     logout_user()
     return redirect(url_for("views.login"))
+
+@auth.route("/items", methods=["GET"])
+def items():
+    items = Item.query.all()
+    return render_template("items.html", items=items)
+
+@auth.route("/items/<int:id>/delete", methods=["POST"])
+def delete_item(id):
+    item = Item.query.get_or_404(id)
+    db.session.delete(item)
+    db.session.commit()
+    flash("item deleted" , category="success")
+    return redirect(url_for("views.items"))
+
+@auth.route("/items/<int:id>/edit", methods=["GET", "POST"])
+def edit_item(id):
+    item = Item.query.get_or_404(id)
+
+    if request.method == "POST":
+        item.name = request.form["name"]
+        item.stock = request.form["stock"]
+        db.session.commit()
+        flash("Item editted", category="success")    
+    return redirect(url_for("views.items"))
+
     
+
+@auth.route("/items/add", methods=["POST"])
+def add_item():
+    item = Item(
+        name=request.form["name"],
+        stock=request.form["stock"]
+    )
+    db.session.add(item)
+    db.session.commit()
+    flash("item created successfuly", category="success")
+    return redirect(url_for("views.view_item", item_id=item.id))
+
+
+

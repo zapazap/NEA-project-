@@ -1,0 +1,56 @@
+{%extends "base.html"%}{%block title %}login{%endblock%}
+
+
+{%block content%}
+<div class="side-bar">
+    <h1></h1>
+
+</div>
+
+<table class="tableStyle">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Current Stock</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <form method="POST" action="{{ url_for('auth.add_item') }}">
+            <input name="name">
+            <input name="stock">
+            <button>Add</button>
+        </form>
+        {% for item in items %}
+        <tr>
+            <td>{{ item.name }}</td>
+            <td>{{ item.stock }}</td>
+            <td>
+                <!-- Edit -->
+                <a href="{{ url_for('auth.edit_item', id=item.id) }}"
+                   class="btn btn-sm btn-warning">
+                    Edit
+                </a>
+
+                <!-- Delete -->
+                <form method="POST"
+                      action="{{ url_for('auth.delete_item', id=item.id) }}"
+                      style="display:inline;">
+                    <button class="btn btn-sm btn-danger">
+                        Delete
+                    </button>
+
+                <form method="POST" action="{{ url_for('auth.add_item') }}">
+                    <input name="name" placeholder="Item name" required>
+                    <input name="stock" type="number" required>
+                    <button class="btn btn-success">Add</button>
+                </form>
+
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{%endblock%}
