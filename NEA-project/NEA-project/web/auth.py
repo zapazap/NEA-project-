@@ -5,7 +5,7 @@ auth = Blueprint("auth", __name__)
 # imports the db from _init_.py
 from . import db 
 from flask_login import login_user,login_required,logout_user,current_user
-
+import datetime
 @auth.route("/login",methods=["GET","POST"]) 
 def login():
     if request.method == "POST":
@@ -67,42 +67,20 @@ def logout():
     logout_user()
     return redirect(url_for("views.login"))
 
-@auth.route("/items", methods=["GET"])
-def items():
-    items = Item.query.all()
-    return render_template("items.html", items=items)
 
-@auth.route("/items/<int:id>/delete", methods=["POST"])
-def delete_item(id):
-    item = Item.query.get_or_404(id)
-    db.session.delete(item)
+
+@auth.route("/group1", methods = ["POST"])
+def addItem():
+    name = request.form.get("name")
+    stock = request.form.get("stock")
+    price = request.form.get("price")
+    date=datetime.date.today()
+    if int(stock) < 0:
+        flash("stock cannot be less than zero.",category="error")
+        return redirect(url_for("views.group1"))
+    new_item = Item( name = name, stock = stock, price = price, date = date )
+    db.session.add(new_item)
     db.session.commit()
-    flash("item deleted" , category="success")
-    return redirect(url_for("views.items"))
-
-@auth.route("/items/<int:id>/edit", methods=["GET", "POST"])
-def edit_item(id):
-    item = Item.query.get_or_404(id)
-
-    if request.method == "POST":
-        item.name = request.form["name"]
-        item.stock = request.form["stock"]
-        db.session.commit()
-        flash("Item editted", category="success")    
-    return redirect(url_for("views.items"))
-
-    
-
-@auth.route("/items/add", methods=["POST"])
-def add_item():
-    item = Item(
-        name=request.form["name"],
-        stock=request.form["stock"]
-    )
-    db.session.add(item)
-    db.session.commit()
-    flash("item created successfuly", category="success")
-    return redirect(url_for("views.view_item", item_id=item.id))
-
-
-
+    return redirect(url_for("views.group1"))
+def deleteItem():
+    return True

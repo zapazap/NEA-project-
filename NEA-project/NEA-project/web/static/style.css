@@ -148,10 +148,9 @@ input:not([type="checkbox"]),select{
     height: 100vh;
     position: absolute ;
     left: 0;
-    top: calc(0vh + 90px) ;
+    top: 10%;
     background-color: rgb(156, 155, 155);
 }
-
 
 
 .side-button{
@@ -159,20 +158,16 @@ input:not([type="checkbox"]),select{
     height: 10vh;
     width: 20vw;
     box-shadow: 0 0 10px black;
-    top: 10px;
     flex-direction: row;
     text-align: center;
     column-gap: 10px;
-}
-
-.side-button a {
-    color: black;
+    background-color: rgb(156, 155, 155) ;
     font-size: 20px;
-    top: 3.5vh;
-   
     position: relative;
-
+    border: none;
 }
+
+
 
 .create{
     display: inline-block;
@@ -205,3 +200,84 @@ input:not([type="checkbox"]),select{
     border-radius: 5px;
     overflow: hidden;
 }
+
+.grid_item{
+    display: grid;
+    background-color: rgb(201, 199, 199);
+    width: fit-content;
+    height:500px;
+    grid-template-columns: 30px 200px 50px 40px 200px ;
+    grid-auto-rows: 40px;
+    row-gap: 0px;
+}
+
+.grid_item label{
+    border-left:1px solid black;
+    padding: 5px;
+    box-shadow: 0 0 5px black;
+    margin-bottom: 0px;
+    color: #343a40;
+}
+
+.grid_head{
+    display: grid;
+    width: 500px;
+    grid-template-columns:30px 190px 50px 50px 200px;
+    text-decoration: underline;
+
+}   
+
+.grid_head label{
+    height: 15px;
+    padding-left: 10px;
+    
+}
+
+
+.button_dropdown{
+    width: min-content;
+    height: fit-content;
+    background-color: #343a40;
+    box-shadow: 0 0 10px black;
+    position: absolute;
+    right: 50px;
+    bottom: 50px;
+    display:flex;
+    flex-direction: column;
+    border-radius: 10%;
+}
+
+.modify {
+    display: block;
+    width: 100%;
+    font-size: 25px;
+    padding: 20px 45px;
+    border:none;
+    box-shadow: 0 0 5px black;
+    cursor: pointer;
+    color:white ;
+    background-color: #343a40;
+    
+}
+
+.x {
+    padding-right: 30px;
+    text-align: right;
+}
+
+.dropdown{
+    border-radius: 100px;
+    padding: 10px 20px;
+    bottom: 60px;
+    right: 60px;
+    position: absolute;
+}
+
+.delete{
+
+    left:0px;
+    width: 250px;
+    margin: 0px;
+
+}
+

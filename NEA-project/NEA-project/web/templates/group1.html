@@ -2,55 +2,112 @@
 
 
 {%block content%}
-<div class="side-bar">
-    <h1></h1>
 
+<div class="side-bar" ></div>
+
+<div class="grid_parent" id = "grid">
+    <div class="grid_head">
+        <label>ID</label>
+        <label>Item</label>
+        <label>Stock</label>
+        <label>Price</label>
+        <label>Date</label>
+    </div>
+
+    <div class="grid_item" >
+        {%for i in details%}
+            <label>{{i.id}}</label>
+            <label>{{i.name}}</label>
+            <label>{{i.stock}}</label>
+            <label>{{i.price}}</label>
+            <label>{{i.date}}</label>   
+        {%endfor%}
+    </div>
 </div>
 
-<table class="tableStyle">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Current Stock</th>
-            <th>Price</th>
-        </tr>
-    </thead>
+<form method = "POST" style="display: none; " id="item_creation_form">
+    <!-- button does something -->
+    <div style="justify-self: center; ">Add new Item:</div>
+    <button class = "close" onclick="close_form()" style="transform: translate(15px, -10px);">X</button>
+    <div class="inputBox">
+        <input type="text" name = "name" placeholder="name:" required>
+    </div>
+    <div class="inputBox">
+        <input type="text" name = "stock" placeholder="stock:" required>
+    </div>
+    <div class="inputBox">
+        <input type="text" name = "price" placeholder="price:" required>
+    </div>
+    <!-- <div class="inputBox">
+        <input type="text" name = "date" placeholder="date:" required>
+    </div> -->
+    <button type="submit" class="button" >SUBMIT</button>
+        
+</form>
 
-    <tbody>
-        <form method="POST" action="{{ url_for('auth.add_item') }}">
-            <input name="name">
-            <input name="stock">
-            <button>Add</button>
-        </form>
-        {% for item in items %}
-        <tr>
-            <td>{{ item.name }}</td>
-            <td>{{ item.stock }}</td>
-            <td>
-                <!-- Edit -->
-                <a href="{{ url_for('auth.edit_item', id=item.id) }}"
-                   class="btn btn-sm btn-warning">
-                    Edit
-                </a>
 
-                <!-- Delete -->
-                <form method="POST"
-                      action="{{ url_for('auth.delete_item', id=item.id) }}"
-                      style="display:inline;">
-                    <button class="btn btn-sm btn-danger">
-                        Delete
-                    </button>
+<!-- parent div for both menu buttons and menu inputs (delete) -->
+<div class = "menu_parent">
+    <!-- <form method = "POST"   id="delete_input">
+        <div class="inputBox delete">
+            <input type="text" name = "ID" placeholder="Enter ID:" required>
+        </div>
+    </form>  -->
+    <div class = "button_dropdown" id = "modify_buttons" style="display:none;">
+        
+        <button class="modify"  onclick="addItem()">
+                ADD +
+        </button>
 
-                <form method="POST" action="{{ url_for('auth.add_item') }}">
-                    <input name="name" placeholder="Item name" required>
-                    <input name="stock" type="number" required>
-                    <button class="btn btn-success">Add</button>
-                </form>
+        <button class="modify" onclick="deleteItem()"  >
+                EDIT
+        </button>
 
-                </form>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+        <button class="modify" >
+                DELETE
+        </button>
+
+        <button class="modify x"  onclick="close_modify()">
+            x
+        </button>
+
+    </div>
+</div>
+
+
+<div id = "modify_menu_button">
+<button class="create dropdown"  onclick="open_modify()">+</button>
+</div>
+</div>
+
+<script>
+    function addItem(){
+        let form = document.getElementById("item_creation_form")
+        form.style.display = "block"
+        let grid = document.getElementById("grid")
+        grid.style.display = "none"
+    }
+    function close_form(){
+        let form = document.getElementById("item_creation_form")
+        form.style.display = "none"
+        let grid = document.getElementById("grid")
+        grid.style.display = "grid"
+    }
+    function open_modify(){
+        let buttons = document.getElementById("modify_buttons")
+        buttons.style.display = "block"
+        let menu = document.getElementById("modify_menu_button")
+        menu.style.display = "none"
+    }
+    function close_modify(){
+        let modify_buttons = document.getElementById("modify_buttons")
+        modify_buttons.style.display = "none"
+        let modify_menu = document.getElementById("modify_menu_button")
+        modify_menu.style.display = "block"
+    }
+    function deleteItem(){
+        
+    }
+</script>
+
 {%endblock%}

@@ -44,14 +44,6 @@ def createGroup():
 
 @views.route("/group1") 
 def group1():
-    return render_template("group1.html")
+    details = Item.query.all()
+    return render_template("group1.html", details = details)
 
-@views.route("/items/<int:id>/edit")
-def edit_item(id):
-    item = Item.query.get_or_404(id)
-    return render_template("edit_item.html", item=item)
-
-@views.route("/items/<int:item_id>")
-def view_item(item_id):
-    item = Item.query.get_or_404(item_id)
-    return render_template("item.html", item=item)

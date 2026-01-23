@@ -1,6 +1,8 @@
 from . import db
 from flask_login import UserMixin
 from sqlalchemy.sql import func
+from sqlalchemy import Column, Integer, String
+from sqlalchemy.ext.declarative import declarative_base
 
 
 class User(db.Model, UserMixin):
@@ -15,6 +17,6 @@ class Item(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(30))
     stock = db.Column(db.Integer, default = 0)
-    # price = db.Column(db.Integer)
-    # date = db.Column(db.DateTime(timezone = True), default = func.now())
+    price = db.Column(db.Integer)
+    date = db.Column(db.String(20))
     user_id = db.Column(db.Integer,db.ForeignKey("user.id"))
