@@ -6,6 +6,7 @@ auth = Blueprint("auth", __name__)
 from . import db 
 from flask_login import login_user,login_required,logout_user,current_user
 import datetime
+from sqlalchemy import update
 @auth.route("/login",methods=["GET","POST"]) 
 def login():
     if request.method == "POST":
@@ -14,7 +15,6 @@ def login():
         user = User.query.filter_by(email=email).first()
         if user:
             if check_password_hash(user.password, password):
-                flash("logged in successfully", category="success")
                 login_user(user,remember=True)
                 return redirect(url_for("views.home"))
             else:
@@ -52,7 +52,6 @@ def register():
             new_user = User(email = email, first_name = first_name, password=generate_password_hash(password1) )
             db.session.add(new_user)
             db.session.commit()
-            flash("Account created", category="success")
             login_user(user,remember=True)
             return redirect(url_for("views.register"))
         return render_template("register.html")
@@ -71,16 +70,31 @@ def logout():
 
 @auth.route("/group1", methods = ["POST"])
 def addItem():
-    name = request.form.get("name")
-    stock = request.form.get("stock")
-    price = request.form.get("price")
-    date=datetime.date.today()
-    if int(stock) < 0:
-        flash("stock cannot be less than zero.",category="error")
-        return redirect(url_for("views.group1"))
-    new_item = Item( name = name, stock = stock, price = price, date = date )
-    db.session.add(new_item)
+    id = request.form.get("ID")
+    item_edit = request.form.get("item_edit")
+    print(id,item_edit)
+    if id != None:
+        Item.query.filter_by(id=id).delete()
+    elif item_edit != None:
+        id = request.form.get("id_edit")
+        name = request.form.get("item_edit")
+        print("Hello world")
+        stock = request.form.get("stock_edit")
+        price = request.form.get("price_edit")
+        Item.query.filter_by(id=id).update({"name":name,"stock":stock,"price":price})
+        db.session.commit()
+
+    else:
+        name = request.form.get("name")
+        stock = request.form.get("stock")
+        price = request.form.get("price")
+        date=datetime.date.today()
+        if int(stock) < 0:
+            flash("stock cannot be less than zero.",category="error")
+            return redirect(url_for("views.group1"))
+        new_item = Item( name = name, stock = stock, price = price, date = date )
+        db.session.add(new_item)
     db.session.commit()
     return redirect(url_for("views.group1"))
-def deleteItem():
-    return True
+    
+

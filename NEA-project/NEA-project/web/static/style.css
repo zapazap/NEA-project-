@@ -274,10 +274,17 @@ input:not([type="checkbox"]),select{
 }
 
 .delete{
-
-    left:0px;
-    width: 250px;
-    margin: 0px;
-
+    position: absolute;
+    bottom: 110px;
+    left: 1450px;
+    width: 300px;
 }
 
+.submit{
+    position: absolute;
+    bottom: 215px;
+    left: 1505px;
+    width: 150px;
+    padding: 10px;
+    border-radius: 20px;
+}
