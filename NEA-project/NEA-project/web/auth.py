@@ -72,16 +72,15 @@ def logout():
 def addItem():
     id = request.form.get("ID")
     item_edit = request.form.get("item_edit")
-    print(id,item_edit)
     if id != None:
         Item.query.filter_by(id=id).delete()
     elif item_edit != None:
-        id = request.form.get("id_edit")
-        name = request.form.get("item_edit")
-        print("Hello world")
-        stock = request.form.get("stock_edit")
-        price = request.form.get("price_edit")
-        Item.query.filter_by(id=id).update({"name":name,"stock":stock,"price":price})
+        for i in range(len(request.form.getlist("id_edit"))):
+            id = request.form.getlist("id_edit")[i]
+            name = request.form.getlist("item_edit")[i]
+            stock = request.form.getlist("stock_edit")[i]
+            price = request.form.getlist("price_edit")[i]
+            Item.query.filter_by(id=id).update({"name":name,"stock":stock,"price":price})
         db.session.commit()
 
     else:
