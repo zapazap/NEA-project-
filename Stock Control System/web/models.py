@@ -10,12 +10,14 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(50), unique=True)
     password = db.Column(db.String(500))
     first_name = db.Column(db.String(50))
-
+    business_id = db.Column(db.Integer, ForeignKey("business.id"))
+    business = db.relationship("Business")
 
 class Business(db.Model):
     __tablename__ = "business"
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(30))
+    
 
 class Group(db.Model):
     __tablename__ = "group"
@@ -33,3 +35,4 @@ class Item(db.Model):
     date = db.Column(db.String(20))
     group_id = db.Column(db.Integer, ForeignKey("group.id"),primary_key=True) 
     group = db.relationship("Group")
+
