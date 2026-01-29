@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Register{% endblock %}
+{% block secNav%} {%endblock%}
+{% block content %}
+<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
+<div class="container">
+    <form method="post">
+        <h1>Register</h1>
+
+        <div class="inputBox">
+            <input type="email" name="email" placeholder="Email" required>
+            <i class="bx bx-user"></i>
+        </div>
+
+        <div class="inputBox">
+            <input type="text" name="firstname" placeholder="First Name" required>
+            <i class="bx bx-user"></i>
+        </div>
+
+        <div class="inputBox">
+            <input type="password" name="password1" placeholder="Password" required>
+            <i class="bx bx-lock"></i>
+        </div>
+
+        <div class="inputBox">
+            <input type="password" name="password2" placeholder="Confirm Password" required>
+            <i class="bx bx-lock"></i>
+        </div>
+
+        <div class="inputBox">
+            <select name="role_select" required>
+                <option value="">-- Select Role --</option>
+                <option value="user">User</option>
+                <option value="admin">Admin</option>
+            </select>
+        </div>
+
+        <button type="submit" class="button">Register</button>
+
+        <div class="register">
+            <p>
+                Already have an account?
+                <a href="/login">Login here</a>
+            </p>
+        </div>
+    </form>
+</div>
+{% endblock %}
