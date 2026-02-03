@@ -5,13 +5,9 @@
 <div class="side-bar">
     <h1></h1>
 
-
-    <button class="side-button" do onclick="document.location.href='/business1'">Business 1</button>
-    <button class="side-button" do onclick="document.location.href='/business2'">Business 2</button>
-    <button class="side-button" do onclick="document.location.href='/business3'">Business 3</button>
-  
-
-
+    {% for business in businesses %}
+    <button class="side-button" do onclick="document.location.href='/business/{{business.id}}'">{{business.name}}</button>
+    {% endfor %}
     
 </div>
 

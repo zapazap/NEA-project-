@@ -24,27 +24,16 @@ def resetPassword():
 @views.route("/home") 
 @login_required
 def home():
-    return render_template("home.html")
+    businesses = Business.query.all()
+    return render_template("home.html", businesses=businesses)
 
-@views.route("/business1") 
-def business1():
-    return render_template("business1.html")
+@views.route("business/<int:business_id>") 
+def business(business_id):
+    groups = Group.query.filter_by(business_id=business_id)
+    return render_template("business.html", business_id=business_id, groups=groups)
 
-@views.route("/business2") 
-def business2():
-    return render_template("business2.html")
-
-@views.route("/business3") 
-def business3():
-    return render_template("business3.html")
-
-@views.route("/createGroup") 
-def createGroup():
-    group = Group.query.all()
-    return render_template("createGroup.html", groups=len(group))
-
-@views.route("group/<int:group_id>") 
-def group(group_id):
+@views.route("/business/<int:business_id>/group/<int:group_id>") 
+def group(business_id, group_id):
     details = Item.query.filter_by(group_id=group_id) 
-    return render_template("group.html", details = details)
+    return render_template("group.html", details=details)
 

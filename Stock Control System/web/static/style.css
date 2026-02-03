@@ -288,3 +288,11 @@ input:not([type="checkbox"]),select{
     padding: 10px;
     border-radius: 20px;
 }
+
+.groups_container {
+    display: grid;
+    width: 500px;
+    height: 500px;
+    margin-top: 500px;
+    border: 1px solid red;
+}

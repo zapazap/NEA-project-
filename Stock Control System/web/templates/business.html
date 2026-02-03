@@ -1,0 +1,18 @@
+{%extends "base.html"%}{%block title %}login{%endblock%}
+
+{%block content%}
+
+<div class="groups_container">
+    {% for group in groups %}
+    <a href="business/{{business_id}}/group/{{group.id}}">hi{{group.name}}</a>
+    {% endfor %}
+</div>
+
+<form>
+    <div class = "createGroup">
+        <a  href="" class="create" name = "create_group">
+            create group +
+        </a>
+    </div>
+</form>
+{%endblock%}
