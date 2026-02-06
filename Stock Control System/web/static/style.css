@@ -296,7 +296,7 @@ input:not([type="checkbox"]),select{
     height: fit-content;
     margin-top: 500px;
     border-radius:10px;
-    background-color: rgb(156, 155, 155);
+    background-color:none;
   }
 
 .groups_placeholder{
@@ -304,4 +304,5 @@ input:not([type="checkbox"]),select{
     text-align:center;
     border:10px solid #343a40;
     padding:100px;
+    background-color: rgb(156, 155, 155);
 }

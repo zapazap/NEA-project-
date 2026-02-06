@@ -1,5 +1,5 @@
 from flask import Blueprint, request, flash, render_template, url_for, redirect
-from .models import User,Item
+from .models import *
 from werkzeug.security import generate_password_hash,check_password_hash
 auth = Blueprint("auth", __name__)
 # imports the db from _init_.py
@@ -70,6 +70,15 @@ def logout():
     logout_user()
     return redirect(url_for("views.login"))
 
+
+@auth.route("/business/<int:business_id>", methods = ["POST"])
+def addGroup(business_id):  
+    name= request.form.get('name')
+    id = Group.query.filter_by(business_id=business_id).count()+1
+    new_group = Group(id=id, name=name,business_id=business_id)
+    db.session.add(new_group)
+    db.session.commit()
+    return redirect(request.url)
 
 
 @auth.route("/business/<int:business_id>/group/<int:group_id>", methods = ["POST"])

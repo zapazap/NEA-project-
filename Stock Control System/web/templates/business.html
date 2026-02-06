@@ -32,10 +32,17 @@
 <script>
   function add_group() {
     let create_group_form = document.getElementById('add_group')
-    create_group_form.display = "block"  
+    create_group_form.style.display = "block"  
     let hide_groups = document.getElementById('group_grid')
-    hide_groups.display = "none"
+    hide_groups.style.display = "none"
   }  
+    function close_form(){
+      let create_group_form = document.getElementById("add_group")
+      create_group_form.style.display = "none"
+      let show_groups = document.getElementById("grid")
+      show_groups.style.display = "grid"
+  }
+
 
 </script>
 {%endblock%}
