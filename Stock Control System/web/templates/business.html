@@ -2,17 +2,40 @@
 
 {%block content%}
 
-<div class="groups_container">
+<div class="groups_container" id = "group_grid" display = 'block'>
     {% for group in groups %}
-    <a href="business/{{business_id}}/group/{{group.id}}">hi{{group.name}}</a>
+    <a class = "groups_placeholder" href="{{business_id}}/group/{{group.id}}">{{group.name}}</a>
     {% endfor %}
 </div>
 
-<form>
-    <div class = "createGroup">
-        <a  href="" class="create" name = "create_group">
-            create group +
-        </a>
+<form method = "POST" style="display: none;" id="add_group" >
+<!-- Form that is hidden until add button is clicked that enables you to add new items -->
+
+    <div style="justify-self: center; ">Add new Group:</div>
+    <button class = "close" onclick="close_form()" style="transform: translate(15px, -10px);">X</button>
+    <div class="inputBox">
+        <input type="text" name = "name" placeholder="name:" required>
     </div>
+       
+    <button type="submit" class="button" >SUBMIT</button>
+
 </form>
+
+
+<div class = "creategroup">
+    <button class="create" name = "create_group" onclick = "add_group()">
+        create group +
+    </button>
+</div>
+
+
+<script>
+  function add_group() {
+    let create_group_form = document.getElementById('add_group')
+    create_group_form.display = "block"  
+    let hide_groups = document.getElementById('group_grid')
+    hide_groups.display = "none"
+  }  
+
+</script>
 {%endblock%}

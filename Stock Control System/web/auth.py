@@ -56,7 +56,7 @@ def register():
             new_user = User(email = email, first_name = first_name, password=generate_password_hash(password1) )
             db.session.add(new_user)
             db.session.commit()
-            login_user(user,remember=True)
+            login_user(new_user,remember=True)
             return redirect(url_for("views.register"))
         return render_template("register.html")
 
@@ -72,8 +72,8 @@ def logout():
 
 
 
-@auth.route("group/<int:group_id>", methods = ["POST"])
-def addItem(group_id):  
+@auth.route("/business/<int:business_id>/group/<int:group_id>", methods = ["POST"])
+def addItem(business_id,group_id):  
     id = request.form.get("ID")
     item_edit = request.form.get("item_edit")
     if id != None:
