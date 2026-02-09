@@ -1,0 +1,48 @@
+{%extends "base.html"%}{%block title %}login{%endblock%}
+
+{%block content%}
+
+<div class="groups_container" id = "group_grid" display = 'block'>
+    {% for group in groups %}
+    <a class = "groups_placeholder" href="{{business_id}}/group/{{group.id}}">{{group.name}}</a>
+    {% endfor %}
+</div>
+
+<form method = "POST" style="display: none;" id="add_group" >
+<!-- Form that is hidden until add button is clicked that enables you to add new items -->
+
+    <div style="justify-self: center; ">Add new Group:</div>
+    <button class = "close" onclick="close_form()" style="transform: translate(15px, -10px);">X</button>
+    <div class="inputBox">
+        <input type="text" name = "name" placeholder="name:" required>
+    </div>
+       
+    <button type="submit" class="button" >SUBMIT</button>
+
+</form>
+
+
+<div class = "creategroup">
+    <button class="create" name = "create_group" onclick = "add_group()">
+        create group +
+    </button>
+</div>
+
+
+<script>
+  function add_group() {
+    let create_group_form = document.getElementById('add_group')
+    create_group_form.style.display = "block"  
+    let hide_groups = document.getElementById('group_grid')
+    hide_groups.style.display = "none"
+  }  
+    function close_form(){
+      let create_group_form = document.getElementById("add_group")
+      create_group_form.style.display = "none"
+      let show_groups = document.getElementById("grid")
+      show_groups.style.display = "grid"
+  }
+
+
+</script>
+{%endblock%}

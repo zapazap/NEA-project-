@@ -1,0 +1,14 @@
+{%extends "base.html"%}{%block title %}login{%endblock%}
+
+{% block content %}
+
+<div class="side-bar">
+    <h1></h1>
+
+    {% for business in businesses %}
+    <button class="side-button" do onclick="document.location.href='/business/{{business.id}}'">{{business.name}}</button>
+    {% endfor %}
+    
+</div>
+
+{% endblock %}
